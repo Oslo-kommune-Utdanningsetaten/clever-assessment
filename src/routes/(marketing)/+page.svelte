@@ -36,7 +36,7 @@
 				undervisningsgrupper:
 			</p>
 			<div class="grid auto-rows-fr grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-				<table class="min-w-full bg-white shadow-md">
+				<table class="min-w-full shadow-md">
 					<thead>
 						<tr>
 							<th
