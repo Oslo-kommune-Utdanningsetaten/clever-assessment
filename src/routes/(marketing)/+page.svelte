@@ -35,8 +35,8 @@
 				Du er {#if $selectedTestUser.role === 'teacher'}lærer{:else}elev{/if}. Her er dine
 				undervisningsgrupper:
 			</p>
-			<div class="grid auto-rows-fr grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-				<table class="min-w-full shadow-md">
+			<div class="space-y-6">
+				<table class="w-full shadow-md ">
 					<thead>
 						<tr>
 							<th
@@ -91,9 +91,9 @@
 
 		<div class="space-y-6">
 			<h1 class="text-2xl font-semibold md:text-3xl">Dine vurderinger</h1>
-			<div class="grid auto-rows-fr grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+			<div class="grid grid-cols-1 gap-4 md:grid-cols-3 w-full">
 				{#each assessments as assessment}
-					<Card.Root>
+					<Card.Root class="w-full">
 						<Card.Header>
 							<Card.Title>
 								{assessment.title}
