@@ -14,17 +14,17 @@ A clickable experiment on what an assessment app in Osloskolen could look like
 
 ## Todo
 
-[x] head/title stuff
-[x] svg favicon
-[x] landing page logged in conditional
-[x] currentUser store
-[x] currentUser switcher
-[x] Teaching groups
-[x] Assessment contexts
-[ ] My assessments
-[ ] Assessment details
-[ ] Assessment edit/create
-[ ] Assessment styles
+- [x] head/title stuff
+- [x] svg favicon
+- [x] landing page logged in conditional
+- [x] currentUser store
+- [x] currentUser switcher
+- [x] Teaching groups
+- [x] Assessment contexts
+- [ ] My assessments
+- [ ] Assessment details
+- [ ] Assessment edit/create
+- [ ] Assessment styles
 
 ## docs
 
