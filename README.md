@@ -1,4 +1,6 @@
-# Clever assessment AKA VV2 (Vurdering versjon 2)
+# Clever assessment
+
+## Probably a better name: VV2 (Vurdering versjon 2)
 
 A clickable experiment on what an assessment app in Osloskolen could look like
 
@@ -28,6 +30,8 @@ A clickable experiment on what an assessment app in Osloskolen could look like
 
 Template: https://github.com/cowboycodr/kiankit/
 
+https://learn.svelte.dev/tutorial/welcome-to-svelte
+https://kit.svelte.dev/docs/introduction
 https://tailwindcss.com/docs/text-wrap
 https://ui.shadcn.com/docs/v0
 https://www.bits-ui.com/docs/components
