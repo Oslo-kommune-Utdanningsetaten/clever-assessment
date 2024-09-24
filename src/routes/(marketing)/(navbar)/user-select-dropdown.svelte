@@ -43,7 +43,7 @@
 	})
 </script>
 
-{#if users.length > 0}
+{#if users?.length > 0}
 	<Dropdown.Root>
 		<Dropdown.Trigger let:builder asChild>
 			<Button builders={[builder]} variant="ghost" class="space-x-1">
@@ -76,5 +76,5 @@
 		</Dropdown.Content>
 	</Dropdown.Root>
 {:else}
-	<span>No user selected</span>
+	<span>No user available</span>
 {/if}
