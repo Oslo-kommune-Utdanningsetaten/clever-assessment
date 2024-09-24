@@ -1,0 +1,19 @@
+{
+	"sqltools.connections": [
+		{
+			"previewLimit": 50,
+			"server": "aws-0-eu-north-1.pooler.supabase.com",
+			"port": 6543,
+			"askForPassword": true,
+			"driver": "PostgreSQL",
+			"name": "CleverAssessment",
+			"database": "postgres",
+			"username": "postgres.ijyhfcpbrslvlaodhnjn"
+		}
+	],
+	"prettier.configPath": ".prettierrc",
+	"prettier.prettierPath": "./node_modules/prettier",
+	"prettier.printWidth": 100,
+	"svelte.plugin.svelte.format.config.printWidth": 100,
+	"editor.defaultFormatter": "esbenp.prettier-vscode"
+}
