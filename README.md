@@ -21,10 +21,15 @@ A clickable experiment on what an assessment app in Osloskolen could look like
 - [x] currentUser switcher
 - [x] Teaching groups
 - [x] Assessment contexts
-- [ ] My assessments
+  - [ ] Alle vurderingssituasjoner (assessment_context) for en undervisningsgruppe (teaching_group)
+  - [ ] Tabell med alle elever (user) og en kolonne for hver vurderingssituasjon (assessment_context)
+- [ ] Alle vurderinger (assessment) i én vurderingssituasjon
+
 - [ ] Assessment details
 - [ ] Assessment edit/create
 - [ ] Assessment styles
+- Fikse reload av hvem som ser hva
+- Fikse fake brukere (laste fra db istedet for hardkodet)
 
 ## docs
 
