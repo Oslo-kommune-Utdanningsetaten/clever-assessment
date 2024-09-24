@@ -1,5 +1,6 @@
 import { supabase } from '$lib/server/db/supabase.js'
 import { getAssessmentFormats } from './assessmentFormat.js'
+import { getAssessments } from './assessment.js'
 
 export const getTeachingGroup = async (options = {}) => {
   const { teachingGroupId } = options
@@ -35,13 +36,25 @@ export const getTeachingGroup = async (options = {}) => {
   result.students = students
 
   // array of promises to get assessment formats for each context
-  const promises = teachingGroup.assessmentContexts.map(async (assessmentContext) => {
+  const assessmentFormatsPromise = teachingGroup.assessmentContexts.map(async (assessmentContext) => {
     result.assessmentContexts.push(assessmentContext)
     return getAssessmentFormats({ assessmentContextId: assessmentContext.id })
   })
 
-  // apply results of promises to the result object
-  await Promise.all(promises).then((assessmentFormats) => {
+  // array of promises to get assessments for each context
+  const assessmentsPromise = result.assessmentContexts.map(async (assessmentContext) => {
+    return getAssessments({ assessmentContextId: assessmentContext.id })
+  })
+
+  // resolve promise and apply assessments to the result object
+  await Promise.all(assessmentsPromise).then(assessmentsPerContext => {
+    assessmentsPerContext.forEach((assessments, index) => {
+      result.assessmentContexts[index].assessments = assessments.data
+    })
+  })
+
+  // resolve promise and apply assessment formats to the result object
+  await Promise.all(assessmentFormatsPromise).then((assessmentFormats) => {
     assessmentFormats.forEach((assessmentFormat, index) => {
       result.assessmentContexts[index].assessmentFormats = assessmentFormat.data
     })
