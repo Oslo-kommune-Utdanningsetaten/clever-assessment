@@ -10,6 +10,14 @@ export const getTeachingGroup = async (options = {}) => {
       id,
       title,
       description
+    ),
+    students: TeachingGroupMembership(
+      id,
+      user: User(
+        id,
+        name,
+        role
+      )
     )
   `
   const { data, error } = await supabase
@@ -21,6 +29,10 @@ export const getTeachingGroup = async (options = {}) => {
 
   // build a properly formatted obeject worty as a return value
   const result = Object.assign({}, teachingGroup, { assessmentContexts: [] })
+
+  // hide foreign key table and filter out non-students from the members list
+  const students = teachingGroup.students.map((member) => member.user).filter((student) => student.role === 'student')
+  result.students = students
 
   // array of promises to get assessment formats for each context
   const promises = teachingGroup.assessmentContexts.map(async (assessmentContext) => {
