@@ -35,32 +35,32 @@
 				Du er {#if $selectedTestUser.role === 'teacher'}lærer{:else}elev{/if}. Her er dine
 				undervisningsgrupper:
 			</p>
-			<div class="space-y-6">
-				<table class="w-full shadow-md ">
+			<div class="overflow-x-auto">
+				<table class="w-full shadow-md">
 					<thead>
 						<tr>
 							<th
-								class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700"
+								class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700 sm:px-6"
 							>
 								Undervisningsgruppe</th
 							>
 							<th
-								class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700"
+								class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700 sm:px-6"
 							>
 								Fag</th
 							>
 							<th
-								class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700"
+								class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700 sm:px-6"
 							>
 								Fagkode</th
 							>
 							<th
-								class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700"
+								class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700 sm:px-6"
 							>
 								Vurderingssituasjoner</th
 							>
 							<th
-								class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700"
+								class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700 sm:px-6"
 							>
 								Vurderinger</th
 							>
@@ -91,7 +91,7 @@
 
 		<div class="space-y-6">
 			<h1 class="text-2xl font-semibold md:text-3xl">Dine vurderinger</h1>
-			<div class="grid grid-cols-1 gap-4 md:grid-cols-3 w-full">
+			<div class="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
 				{#each assessments as assessment}
 					<Card.Root class="w-full">
 						<Card.Header>

@@ -1,5 +1,5 @@
 import { pingSupabase } from '$lib/server/db/supabase.js'
-import { getTeachingGroupMemberships } from '$lib/server/db/user.js'
+import { getTeachingGroupMemberships, getUsers } from '$lib/server/db/user.js'
 
 /** @type {import('./$types').PageServerLoad} */
 export const load = async ({ params, parent, cookies }) => {
@@ -15,5 +15,11 @@ export const load = async ({ params, parent, cookies }) => {
 		console.error('Error fetching data:', error)
 		throw new Error('Failed to load data')
 	}
-	return { teachingGroupMemberships: data }
+
+	let users = await getUsers()
+
+	return {
+		teachingGroupMemberships: data,
+		users: users
+	}
 }
