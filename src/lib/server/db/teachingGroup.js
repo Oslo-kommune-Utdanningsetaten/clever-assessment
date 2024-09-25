@@ -12,7 +12,7 @@ export const getTeachingGroup = async (options = {}) => {
       title,
       description
     ),
-    students: TeachingGroupMembership(
+    members: TeachingGroupMembership(
       id,
       user: User(
         id,
@@ -32,8 +32,14 @@ export const getTeachingGroup = async (options = {}) => {
   const result = Object.assign({}, teachingGroup, { assessmentContexts: [] })
 
   // hide foreign key table and filter out non-students from the members list
-  const students = teachingGroup.students.map((member) => member.user).filter((student) => student.role === 'student')
+  const students = teachingGroup.members.map((member) => member.user).filter((member) => member.role === 'student')
   result.students = students
+
+  // assuming there is only one teacher per group
+  result.teacher = teachingGroup.members.map((member) => member.user).find((member) => member.role === 'teacher')
+
+  // we now have students and teacher
+  delete teachingGroup.members
 
   // array of promises to get assessment formats for each context
   const assessmentFormatsPromise = teachingGroup.assessmentContexts.map(async (assessmentContext) => {
