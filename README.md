@@ -22,7 +22,7 @@ A clickable experiment on what an assessment app in Osloskolen could look like
 - [x] Teaching groups
 - [x] Assessment contexts
   - [x] Alle vurderingssituasjoner (assessment_context) for en undervisningsgruppe (teaching_group)
-  - [ ] Tabell med alle elever (user) og en kolonne for hver vurderingssituasjon (assessment_context)
+  - [x] Tabell med alle elever (user) og en kolonne for hver vurderingssituasjon (assessment_context)
 - [ ] Alle vurderinger (assessment) i én vurderingssituasjon
 
 - [ ] Assessment details
