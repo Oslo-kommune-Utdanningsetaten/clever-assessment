@@ -15,7 +15,7 @@
 	export let users = []
 
 	function handleSelectUser(userId) {
-		const user = users.find((u) => u.id === userId)
+		const user = users.find(u => u.id === userId)
 		document.cookie = `selectedTestUserId=${user.id}; path=/;`
 		$selectedTestUser = user
 		console.log('selectedTestUser', $selectedTestUser)
@@ -32,13 +32,13 @@
 	;({ session } = $page.data)
 
 	$: {
-		users = $page.data.users
+		users = $page.data.users || []
 	}
 
 	onMount(() => {
 		const selectedTestUserId = getCookie('selectedTestUserId')
 		if (selectedTestUserId) {
-			$selectedTestUser = users.find((u) => u.id === selectedTestUserId)
+			$selectedTestUser = users.find(u => u.id === selectedTestUserId)
 		}
 	})
 </script>
@@ -54,7 +54,7 @@
 				{:else}
 					<StudentIcon class="h-[1.2rem] w-[1.2rem]" />
 				{/if}
-				<span> {$selectedTestUser.name}</span>
+				<span>{$selectedTestUser.name}</span>
 				<ChevronDownIcon class="h-4" />
 			</Button>
 		</Dropdown.Trigger>
@@ -69,7 +69,7 @@
 						{:else}
 							<StudentIcon class="h-[1.2rem] w-[1.2rem]" />
 						{/if}
-						<span> {user.name} </span>
+						<span>{user.name}</span>
 					</Dropdown.RadioItem>
 				{/each}
 			</Dropdown.RadioGroup>

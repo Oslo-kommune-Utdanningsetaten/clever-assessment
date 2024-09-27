@@ -3,12 +3,11 @@
 	import AssessmentEditForm from '$lib/components/ui/assessment/assessment-edit-form.svelte'
 
 	export let data
-	let assessmentFormElement
 	let isFormVisible = false
 	let selectedAssessmentContext
 	let selectedStudent
 
-	let { teachingGroup } = data
+	let { teachingGroup, assessmentFormats } = data
 
 	$: {
 		;({ teachingGroup } = data)
@@ -50,7 +49,7 @@
 					<th
 						class="text-wrap bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
-						Format
+						Antall
 					</th>
 				</tr>
 			</thead>
@@ -63,7 +62,7 @@
 								{assessmentContext.description || ''}
 							</td>
 							<td class="whitespace-nowrap text-wrap px-6 py-4">
-								{assessmentContext.assessmentFormats.map(af => af.title).join(', ')}
+								{assessmentContext.assessments.length}
 							</td>
 						</tr>
 					{/each}
@@ -121,7 +120,6 @@
 		class={`duration-400 absolute bottom-0 right-0 overflow-hidden shadow-md transition-all ease-in-out ${
 			isFormVisible ? 'w-1/2' : 'w-0'
 		}`}
-		bind:this={assessmentFormElement}
 	>
 		<AssessmentEditForm
 			assessmentContext={selectedAssessmentContext}

@@ -1,12 +1,14 @@
 import { getTeachingGroup } from '$lib/server/db/teachingGroup.js'
+import { getUsers } from '$lib/server/db/user.js'
 
 /** @type {import('./$types').PageServerLoad} */
 export const load = async ({ params }) => {
-	const { data, error } = await getTeachingGroup({ teachingGroupId: params.id })
+	const { teachingGroup, assessmentFormats } = await getTeachingGroup({ teachingGroupId: params.id })
+	const users = await getUsers()
 
-	if (error) {
-		console.error('Error fetching data:', error)
-		throw new Error('Failed to load data')
+	return {
+		teachingGroup,
+		assessmentFormats,
+		users
 	}
-	return { teachingGroup: data }
 }

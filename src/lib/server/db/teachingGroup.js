@@ -28,43 +28,30 @@ export const getTeachingGroup = async (options = {}) => {
 
   const teachingGroup = data[0]
 
-  // build a properly formatted obeject worty as a return value
-  const result = Object.assign({}, teachingGroup, { assessmentContexts: [] })
-
   // hide foreign key table and filter out non-students from the members list
   const students = teachingGroup.members.map((member) => member.user).filter((member) => member.role === 'student')
-  result.students = students
+  teachingGroup.students = students
 
   // assuming there is only one teacher per group
-  result.teacher = teachingGroup.members.map((member) => member.user).find((member) => member.role === 'teacher')
+  teachingGroup.teacher = teachingGroup.members.map((member) => member.user).find((member) => member.role === 'teacher')
 
   // we now have students and teacher
   delete teachingGroup.members
 
-  // array of promises to get assessment formats for each context
-  const assessmentFormatsPromise = teachingGroup.assessmentContexts.map(async (assessmentContext) => {
-    result.assessmentContexts.push(assessmentContext)
-    return getAssessmentFormats({ assessmentContextId: assessmentContext.id })
-  })
+  // just get all assessment formats for now
+  const assessmentFormats = await getAssessmentFormats()
 
   // array of promises to get assessments for each context
-  const assessmentsPromise = result.assessmentContexts.map(async (assessmentContext) => {
+  const assessmentsPromise = teachingGroup.assessmentContexts.map(async (assessmentContext) => {
     return getAssessments({ assessmentContextId: assessmentContext.id })
   })
 
   // resolve promise and apply assessments to the result object
   await Promise.all(assessmentsPromise).then(assessmentsPerContext => {
     assessmentsPerContext.forEach((assessments, index) => {
-      result.assessmentContexts[index].assessments = assessments.data
+      teachingGroup.assessmentContexts[index].assessments = assessments.data
     })
   })
 
-  // resolve promise and apply assessment formats to the result object
-  await Promise.all(assessmentFormatsPromise).then((assessmentFormats) => {
-    assessmentFormats.forEach((assessmentFormat, index) => {
-      result.assessmentContexts[index].assessmentFormats = assessmentFormat.data
-    })
-  })
-
-  return { data: result, error }
+  return { teachingGroup, assessmentFormats }
 }

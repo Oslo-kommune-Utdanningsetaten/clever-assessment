@@ -16,7 +16,7 @@ export const load = async ({ params, parent, cookies }) => {
 		throw new Error('Failed to load data')
 	}
 
-	let users = await getUsers()
+	const users = await getUsers()
 
 	return {
 		teachingGroupMemberships: data,
