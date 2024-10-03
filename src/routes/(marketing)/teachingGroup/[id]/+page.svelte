@@ -1,8 +1,10 @@
 <script>
 	import TableCell from '$lib/components/ui/assessment/table-cell.svelte'
 	import AssessmentEditForm from '$lib/components/ui/assessment/assessment-edit-form.svelte'
+	import { selectedTestUser } from '$lib/stores/userStore.js'
 
 	export let data
+	let teacher = $selectedTestUser
 	let isFormVisible = false
 	let selectedAssessmentContext
 	let selectedStudent
@@ -11,10 +13,11 @@
 
 	$: {
 		;({ teachingGroup } = data)
+		teacher = $selectedTestUser
 	}
 
-	const getAssessment = (studentId, assessments) => {
-		return assessments.find(assessment => assessment.studentId === studentId)
+	const getAssessments = (studentId, assessments) => {
+		return assessments.filter(assessment => assessment.studentId === studentId)
 	}
 
 	const toggleForm = async (options = {}) => {
@@ -104,7 +107,8 @@
 							{#each teachingGroup.assessmentContexts as assessmentContext}
 								<TableCell
 									editFunction={() => toggleForm({ student, assessmentContext })}
-									assessment={getAssessment(student.id, assessmentContext.assessments)}
+									deleteFunction={() => console.log('delete')}
+									assessments={getAssessments(student.id, assessmentContext.assessments)}
 									{student}
 								/>
 							{/each}
@@ -121,11 +125,15 @@
 			isFormVisible ? 'w-1/2' : 'w-0'
 		}`}
 	>
-		<AssessmentEditForm
-			assessmentContext={selectedAssessmentContext}
-			student={selectedStudent}
-			saveFunction={() => console.log('save')}
-			cancelFunction={() => toggleForm()}
-		/>
+		{#if isFormVisible}
+			<AssessmentEditForm
+				assessmentContext={selectedAssessmentContext}
+				student={selectedStudent}
+				{teacher}
+				saveFunction={() => console.log('save')}
+				cancelFunction={() => toggleForm()}
+				assessment={null}
+			/>
+		{/if}
 	</div>
 </div>
