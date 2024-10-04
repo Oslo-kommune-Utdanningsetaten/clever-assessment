@@ -10,8 +10,7 @@
 	export let assessmentContext
 	export let teacher
 	export let student
-	export let saveFunction
-	export let cancelFunction
+	export let doneFunction
 
 	let localAssessment = {}
 	let localTextContent
@@ -45,14 +44,36 @@
 		console.log('handleToggleStudentVisibility localAssessment updated', localAssessment)
 	}
 
+	function handleSave(event) {
+		event.preventDefault()
+		console.log('handleSave', localAssessment)
+		doneFunction()
+
+		//     if (e.useDefault != true){
+		//     alert("we're preventing");
+		//     e.preventDefault();
+		//     alert(e.screenX);
+		//     //Firing the regular action
+		//     var evt = document.createEvent("HTMLEvents");
+		//     evt.initEvent(e.type,e.bubbles,e.cancelable);
+		//     evt["useDefault"] = true;
+		//     //Add other "e" attributes like screenX, pageX, etc...
+		//     this.dispatchEvent(evt);
+		// }
+		// else{
+		//     alert("we're not preventing");
+		// }
+	}
+
 	onMount(() => {
 		initializeLocals()
 	})
 </script>
 
 <div class={cn('h-full bg-white p-4 shadow-lg', className)} {...$$restProps}>
-	<form method="POST" action="/app/assessment" use:enhance>
+	<form method="POST" use:enhance>
 		<input type="hidden" name="redirectUrl" value="boomchakka" />
+		<input type="hidden" name="assessment" value={JSON.stringify(localAssessment)} />
 		<h2 class="mb-4 text-xl font-bold">Edit assessment</h2>
 		<pre>{JSON.stringify(localAssessment, null, 2)}</pre>
 		<div class="mb-4">
@@ -83,16 +104,12 @@
 				off="Nei"
 			/>
 		</div>
-		<button
-			type="submit"
-			on:click={() => saveFunction(localAssessment)}
-			class="rounded bg-blue-500 px-4 py-2 text-white"
-		>
+		<button type="submit" class="rounded bg-blue-500 px-4 py-2 text-white" on:click={handleSave}>
 			Lagre
 		</button>
 		<button
 			type="cancel"
-			on:click={cancelFunction}
+			on:click={doneFunction}
 			class="rounded bg-gray-600 px-4 py-2 text-white hover:bg-gray-300 hover:text-gray-700"
 		>
 			Avbryt

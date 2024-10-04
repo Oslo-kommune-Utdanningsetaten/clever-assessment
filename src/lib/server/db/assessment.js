@@ -39,10 +39,10 @@ export const getAssessments = async (options = {}) => {
 }
 
 export const createAssessment = async (assessment) => {
+  console.log('insert assessment', assessment)
   const { data, error } = await supabase
     .from('Assessment')
     .insert(assessment)
     .select()
-
   return { data, error }
 }

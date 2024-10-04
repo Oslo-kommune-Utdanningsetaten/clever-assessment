@@ -136,8 +136,7 @@
 				assessmentContext={selectedAssessmentContext}
 				student={selectedStudent}
 				{teacher}
-				saveFunction={saveAssessment}
-				cancelFunction={() => toggleForm()}
+				doneFunction={() => toggleForm()}
 				assessment={null}
 			/>
 		{/if}
