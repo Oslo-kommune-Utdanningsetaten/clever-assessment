@@ -18,14 +18,14 @@
 	{:else}
 		<button
 			on:click={deleteFunction()}
-			class="text-blue-900 no-underline underline-offset-4 hover:underline"
+			class="text-red-900 no-underline underline-offset-4 hover:underline"
 		>
 			Slett
 		</button>
 	{/if}
 	<button
 		on:click={editFunction()}
-		class="text-blue-900 no-underline underline-offset-4 hover:underline"
+		class="text-green-900 no-underline underline-offset-4 hover:underline"
 	>
 		Opprett
 	</button>

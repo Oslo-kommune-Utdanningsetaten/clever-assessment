@@ -1,4 +1,5 @@
 <script>
+	import { enhance } from '$app/forms'
 	import { cn } from '$lib/utils.js'
 	import { onMount } from 'svelte'
 	import Toggle from 'svelte-toggle'
@@ -35,13 +36,13 @@
 	function handleContentInput() {
 		localAssessment.content.text = localTextContent
 		localAssessment = Object.assign({}, localAssessment)
-		console.log('localAssessment updated', localAssessment)
+		console.log('handleContentInput localAssessment updated', localAssessment)
 	}
 
-	function handleToggleStudentVisibility(event) {
+	function handleToggleStudentVisibility() {
 		localAssessment.isVisibleToStudent = !localAssessment.isVisibleToStudent
 		localAssessment = Object.assign({}, localAssessment)
-		console.log('localAssessment updated', localAssessment)
+		console.log('handleToggleStudentVisibility localAssessment updated', localAssessment)
 	}
 
 	onMount(() => {
@@ -50,7 +51,8 @@
 </script>
 
 <div class={cn('h-full bg-white p-4 shadow-lg', className)} {...$$restProps}>
-	<form>
+	<form method="POST" action="/app/assessment" use:enhance>
+		<input type="hidden" name="redirectUrl" value="boomchakka" />
 		<h2 class="mb-4 text-xl font-bold">Edit assessment</h2>
 		<pre>{JSON.stringify(localAssessment, null, 2)}</pre>
 		<div class="mb-4">
@@ -81,7 +83,11 @@
 				off="Nei"
 			/>
 		</div>
-		<button type="submit" on:click={saveFunction} class="rounded bg-blue-500 px-4 py-2 text-white">
+		<button
+			type="submit"
+			on:click={() => saveFunction(localAssessment)}
+			class="rounded bg-blue-500 px-4 py-2 text-white"
+		>
 			Lagre
 		</button>
 		<button

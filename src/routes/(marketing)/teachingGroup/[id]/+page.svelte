@@ -27,6 +27,12 @@
 		selectedStudent = student
 		isFormVisible = !isFormVisible
 	}
+	const saveAssessment = async assessment => {
+		console.log('gonna saveAssessment', assessment)
+		//const result = await createAssessment(assessment)
+		console.log('did saveAssessment')
+		toggleForm()
+	}
 </script>
 
 <div class="container relative my-12 max-w-[1024px] space-y-12">
@@ -130,7 +136,7 @@
 				assessmentContext={selectedAssessmentContext}
 				student={selectedStudent}
 				{teacher}
-				saveFunction={() => console.log('save')}
+				saveFunction={saveAssessment}
 				cancelFunction={() => toggleForm()}
 				assessment={null}
 			/>
