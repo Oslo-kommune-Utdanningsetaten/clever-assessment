@@ -1,6 +1,4 @@
 import { supabase } from '$lib/server/db/supabase.js'
-import { getAssessmentFormats } from './assessmentFormat.js'
-import { getAssessments } from './assessment.js'
 
 export const getTeachingGroup = async (options = {}) => {
   const { teachingGroupId } = options
@@ -10,7 +8,28 @@ export const getTeachingGroup = async (options = {}) => {
     assessmentContexts: AssessmentContext(
       id,
       title,
-      description
+      description,
+      assessments: Assessment(
+        id,
+        content,
+        created_at,
+        is_self_assessment,
+        is_visible_to_student,
+        student:student_id(
+          id,
+          name
+        ),
+        teacher:teacher_id(
+          id,
+          name
+        ),
+        assessmentFormat:assessment_format_id(
+          id,
+          title,
+          tags,
+          variant
+        )
+      )
     ),
     members: TeachingGroupMembership(
       id,
@@ -35,23 +54,8 @@ export const getTeachingGroup = async (options = {}) => {
   // assuming there is only one teacher per group
   teachingGroup.teacher = teachingGroup.members.map((member) => member.user).find((member) => member.role === 'teacher')
 
-  // we now have students and teacher
+  // we now have students and teacher, delete members
   delete teachingGroup.members
 
-  // just get all assessment formats for now
-  const assessmentFormats = await getAssessmentFormats()
-
-  // array of promises to get assessments for each context
-  const assessmentsPromise = teachingGroup.assessmentContexts.map(async (assessmentContext) => {
-    return getAssessments({ assessmentContextId: assessmentContext.id })
-  })
-
-  // resolve promise and apply assessments to the result object
-  await Promise.all(assessmentsPromise).then(assessmentsPerContext => {
-    assessmentsPerContext.forEach((assessments, index) => {
-      teachingGroup.assessmentContexts[index].assessments = assessments.data
-    })
-  })
-
-  return { teachingGroup, assessmentFormats }
+  return { teachingGroup }
 }

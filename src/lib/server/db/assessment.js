@@ -6,6 +6,7 @@ export const getAssessments = async (options = {}) => {
     id,
     content,
     is_self_assessment,
+    created_at,
     assessmentContext:assessment_context_id(
       id,
       title,
@@ -39,10 +40,18 @@ export const getAssessments = async (options = {}) => {
 }
 
 export const createAssessment = async (assessment) => {
-  console.log('insert assessment', assessment)
   const { data, error } = await supabase
     .from('Assessment')
     .insert(assessment)
+    .select()
+  return { data, error }
+}
+
+export const deleteAssessment = async (assessmentId) => {
+  const { data, error } = await supabase
+    .from('Assessment')
+    .delete()
+    .eq('id', assessmentId)
     .select()
   return { data, error }
 }

@@ -24,14 +24,14 @@ A clickable experiment on what an assessment app in Osloskolen could look like
   - [x] Alle vurderingssituasjoner (assessment_context) for en undervisningsgruppe (teaching_group)
   - [x] Tabell med alle elever (user) og en kolonne for hver vurderingssituasjon (assessment_context)
 - [x] skru litt om på datamodellen
-- [ ] Assessment create
-
+- [x] show assessments in table
+- [x] Assessment create
+  - [x] with assessmentFormat
+  - [x] change content type based on assessmentFormat
+- [ ] Assessment edit
 - [ ] Alle vurderinger (assessment) i én vurderingssituasjon
 - [ ] Assessment details
 - [ ] Assessment styles
-- Fikse reload av hvem som ser hva
-- Ved start, laste inn alt en bruker kan se, i ett stort POJO-tre som matcher datamodellen
-- Fikse fake brukere (laste fra db istedet for hardkodet)
 
 ## docs
 

@@ -17,21 +17,23 @@
 	}
 
 	const getAssessments = (studentId, assessments) => {
-		return assessments.filter(assessment => assessment.studentId === studentId)
+		return assessments ? assessments.filter(assessment => assessment.student.id === studentId) : []
+	}
+
+	const countAssessments = studentId => {
+		let count = 0
+		teachingGroup.assessmentContexts.forEach(assessmentContext => {
+			const assessments = getAssessments(studentId, assessmentContext.assessments)
+			count += assessments.length
+		})
+		return count
 	}
 
 	const toggleForm = async (options = {}) => {
-		const { student, assessment, assessmentContext } = options
-		console.log('toggleForm for', student, 'in', assessmentContext)
+		const { student, assessmentContext } = options
 		selectedAssessmentContext = assessmentContext
 		selectedStudent = student
 		isFormVisible = !isFormVisible
-	}
-	const saveAssessment = async assessment => {
-		console.log('gonna saveAssessment', assessment)
-		//const result = await createAssessment(assessment)
-		console.log('did saveAssessment')
-		toggleForm()
 	}
 </script>
 
@@ -39,6 +41,7 @@
 	<h2 class="font-bold sm:text-2xl md:text-3xl">
 		Undervisningsgruppe: {teachingGroup.displayName}
 	</h2>
+
 	<div class="space-y-6">
 		<h2 class="text-3xl font-bold md:text-3xl">Vurderingssituasjoner</h2>
 
@@ -46,19 +49,19 @@
 			<thead>
 				<tr>
 					<th
-						class="text-wrap bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class="text-wrap bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Tittel
 					</th>
 					<th
-						class="text-wrap bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class="text-wrap bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Beskrivelse
 					</th>
 					<th
-						class="text-wrap bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class="text-wrap bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
-						Antall
+						Vurderinger
 					</th>
 				</tr>
 			</thead>
@@ -66,12 +69,14 @@
 				{#if teachingGroup?.assessmentContexts?.length}
 					{#each teachingGroup.assessmentContexts as assessmentContext}
 						<tr>
-							<td class="whitespace-nowrap text-wrap px-6 py-4">{assessmentContext.title}</td>
-							<td class="whitespace-nowrap text-wrap px-6 py-4">
+							<td class="whitespace-nowrap text-wrap px-6 py-4 align-top">
+								{assessmentContext.title}
+							</td>
+							<td class="whitespace-nowrap text-wrap px-6 py-4 align-top">
 								{assessmentContext.description || ''}
 							</td>
-							<td class="whitespace-nowrap text-wrap px-6 py-4">
-								{assessmentContext.assessments.length}
+							<td class="whitespace-nowrap text-wrap px-6 py-4 align-top">
+								{assessmentContext.assessments?.length}
 							</td>
 						</tr>
 					{/each}
@@ -86,18 +91,18 @@
 			<thead>
 				<tr>
 					<th
-						class="text-wrap bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class="text-wrap bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Navn
 					</th>
 					<th
-						class="text-wrap bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class="text-wrap bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Vurderinger
 					</th>
 					{#each teachingGroup.assessmentContexts as assessmentContext}
 						<th
-							class="text-wrap bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700"
+							class="text-wrap bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 						>
 							{assessmentContext.title}
 						</th>
@@ -108,8 +113,10 @@
 				{#if teachingGroup?.students?.length}
 					{#each teachingGroup.students as student}
 						<tr>
-							<td class="whitespace-nowrap text-wrap px-6 py-4">{student.name}</td>
-							<td class="whitespace-nowrap text-wrap px-6 py-4">2</td>
+							<td class="whitespace-nowrap text-wrap px-6 py-4 align-top">{student.name}</td>
+							<td class="whitespace-nowrap text-wrap px-6 py-4 align-top">
+								{countAssessments(student.id)}
+							</td>
 							{#each teachingGroup.assessmentContexts as assessmentContext}
 								<TableCell
 									editFunction={() => toggleForm({ student, assessmentContext })}
@@ -127,7 +134,7 @@
 
 	<!-- Sidebar Form (Initially Hidden) -->
 	<div
-		class={`duration-400 absolute bottom-0 right-0 overflow-hidden shadow-md transition-all ease-in-out ${
+		class={`duration-400 absolute bottom-[-50px] right-0 overflow-hidden rounded border-2 border-emerald-300 shadow-lg transition-all ease-in-out ${
 			isFormVisible ? 'w-1/2' : 'w-0'
 		}`}
 	>
@@ -138,6 +145,7 @@
 				{teacher}
 				doneFunction={() => toggleForm()}
 				assessment={null}
+				{assessmentFormats}
 			/>
 		{/if}
 	</div>

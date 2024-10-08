@@ -1,32 +1,35 @@
 <script>
+	import { format, formatDistance, formatRelative, subDays } from 'date-fns'
+	import CreateIcon from 'lucide-svelte/icons/square-plus'
+	import DeleteIcon from 'lucide-svelte/icons/trash-2'
 	import { cn } from '$lib/utils.js'
 	let className = undefined
 	export { className as class }
 	export let assessments
 	export let editFunction
 	export let deleteFunction
-
-	// {assessment ? 'bg-emerald-100' : 'bg-red-100'}
 </script>
 
 <td
-	class={cn('text-wrap-2 whitespace-nowrap px-6 py-4 text-foreground', className)}
+	class={cn('text-wrap-2 whitespace-nowrap px-6 py-4 align-top text-foreground', className)}
 	{...$$restProps}
 >
 	{#if assessments}
-		{assessments.map(assesment => assesment.id).join(', ')}
-	{:else}
-		<button
-			on:click={deleteFunction()}
-			class="text-red-900 no-underline underline-offset-4 hover:underline"
-		>
-			Slett
-		</button>
+		<ul>
+			{#each assessments as assessment}
+				<li>
+					{assessment.assessmentFormat.title}
+					<span class="text-sm font-light text-gray-400">
+						- {formatDistance(assessment.created_at, new Date(), { addSuffix: true })}
+					</span>
+				</li>
+			{/each}
+		</ul>
 	{/if}
 	<button
 		on:click={editFunction()}
-		class="text-green-900 no-underline underline-offset-4 hover:underline"
+		class="mt-2 transform rounded border px-2 text-gray-600 transition hover:bg-green-500"
 	>
-		Opprett
+		Ny vurdering
 	</button>
 </td>

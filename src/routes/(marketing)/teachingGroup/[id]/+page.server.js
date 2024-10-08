@@ -1,10 +1,12 @@
 import { getTeachingGroup } from '$lib/server/db/teachingGroup.js'
 import { getUsers } from '$lib/server/db/user.js'
-import { createAssessment } from '$lib/server/db/assessment'
+import { createAssessment, deleteAssessment } from '$lib/server/db/assessment'
+import { getAssessmentFormats } from '$lib/server/db/assessmentFormat'
 
 /** @type {import('./$types').PageServerLoad} */
 export const load = async ({ params }) => {
-	const { teachingGroup, assessmentFormats } = await getTeachingGroup({ teachingGroupId: params.id })
+	const { teachingGroup } = await getTeachingGroup({ teachingGroupId: params.id })
+	const { assessmentFormats } = await getAssessmentFormats()
 	const users = await getUsers()
 
 	return {
@@ -14,8 +16,7 @@ export const load = async ({ params }) => {
 	}
 }
 
-function getStorableAsessment(formData) {
-	const assessment = JSON.parse(formData.get('assessment'))
+function assembleStorableAsessment(assessment) {
 	const result = {}
 	result.teacher_id = assessment.teacherId
 	result.student_id = assessment.studentId
@@ -23,19 +24,22 @@ function getStorableAsessment(formData) {
 	result.is_visible_to_student = assessment.isVisibleToStudent
 	result.assessment_context_id = assessment.assessmentContext.id
 	result.content = assessment.content
-	result.assessment_format_id = '5208018f-a555-4920-82c0-2bbd2a3769db'
+	result.assessment_format_id = assessment.assessmentFormat.id
 	return result
 }
 
 
 export const actions = {
-	default: async ({ request }) => {
-		console.log('POST')
+	create: async ({ request }) => {
 		const formData = await request.formData()
-		const assessment = getStorableAsessment(formData)
-		const result = await createAssessment(assessment)
-		console.log('result', result)
-		return result
+		const storableAssessment = assembleStorableAsessment(JSON.parse(formData.get('assessment')))
+		const { data, error } = await createAssessment(storableAssessment)
+		return data
+	},
+	delete: async ({ request }) => {
+		const formData = await request.formData()
+		const assessmentId = formData.get('assessmentId')
+		const { data, error } = await deleteAssessment(assessmentId)
+		return data
 	}
-
 }

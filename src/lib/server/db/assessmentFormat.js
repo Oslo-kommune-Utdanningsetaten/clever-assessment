@@ -6,11 +6,18 @@ export const getAssessmentFormats = async (options = {}) => {
     id,
     title,
     tags,
-    format
+    variant
   `
   const { data, error } = await supabase
     .from('AssessmentFormat')
     .select(selectFormats)
 
-  return { data: data.map(acf => acf.assessmentFormat), error }
+  if (error) {
+    console.error('Failed to fetch assessment formats', error)
+    throw error
+  }
+
+  return {
+    assessmentFormats: data
+  }
 }
