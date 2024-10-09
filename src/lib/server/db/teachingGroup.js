@@ -13,8 +13,8 @@ export const getTeachingGroup = async (options = {}) => {
         id,
         content,
         created_at,
-        is_self_assessment,
-        is_visible_to_student,
+        isSelfAssessment: is_self_assessment,
+        isVisibleToStudent: is_visible_to_student,
         student:student_id(
           id,
           name

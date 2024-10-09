@@ -94,9 +94,10 @@
 	<form method="POST" use:enhance>
 		<input type="hidden" name="action" value="create" />
 		<input type="hidden" name="assessment" value={JSON.stringify(localAssessment)} />
-		<h2 class="mb-4 text-xl font-bold">
+		<h2 class="mb-2 text-xl font-bold">
 			{assessmentContext.title} | {student.name}
 		</h2>
+		<p class="mb-4 italic">{assessmentContext.description || ''}</p>
 
 		<div class="mb-4">
 			<label for="assessmentFormat" class="text-l mb-2 block font-bold">Format</label>
@@ -132,6 +133,7 @@
 				<label for="content" class="text-l mb-2 block font-bold">Tekst</label>
 				<textarea
 					class="w-full rounded border border-gray-300 p-2"
+					rows="8"
 					placeholder="Her skriver du selve vurderingen"
 					bind:value={localTextContent}
 					on:input={handleContentInput}
@@ -189,7 +191,7 @@
 							value={tag}
 							checked={localAssessment.content.tags.includes(tag)}
 							on:click={handleToggleTag}
-							class="mr-2 h-6 w-6 appearance-none rounded border-2 border-gray-300 checked:border-green-500 checked:bg-green-500"
+							class="mr-2 h-6 w-6 appearance-none rounded border-2 border-gray-300 checked:border-green-600 checked:bg-green-600"
 						/>
 						<label for="tag" class="">{tag}</label>
 					</div>
@@ -210,7 +212,7 @@
 				off="Nei"
 			/>
 		</div>
-		<button type="submit" class="rounded bg-blue-500 px-4 py-2 text-white" on:click={handleSave}>
+		<button type="submit" class="rounded bg-green-600 px-4 py-2 text-white" on:click={handleSave}>
 			Lagre
 		</button>
 		<button

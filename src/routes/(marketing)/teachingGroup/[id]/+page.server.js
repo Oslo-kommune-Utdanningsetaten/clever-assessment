@@ -41,5 +41,9 @@ export const actions = {
 		const assessmentId = formData.get('assessmentId')
 		const { data, error } = await deleteAssessment(assessmentId)
 		return data
+	},
+	default: async () => {
+		console.log('Default action called, for some reason')
+		return {}
 	}
 }

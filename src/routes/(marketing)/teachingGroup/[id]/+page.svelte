@@ -49,12 +49,12 @@
 			<thead>
 				<tr>
 					<th
-						class="text-wrap bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class="text-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Tittel
 					</th>
 					<th
-						class="text-wrap bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class=" ext-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Beskrivelse
 					</th>
@@ -69,13 +69,13 @@
 				{#if teachingGroup?.assessmentContexts?.length}
 					{#each teachingGroup.assessmentContexts as assessmentContext}
 						<tr>
-							<td class="whitespace-nowrap text-wrap px-6 py-4 align-top">
+							<td class="whitespace-nowrap text-wrap p-4 align-top">
 								{assessmentContext.title}
 							</td>
-							<td class="whitespace-nowrap text-wrap px-6 py-4 align-top">
+							<td class="whitespace-nowrap text-wrap p-4 align-top">
 								{assessmentContext.description || ''}
 							</td>
-							<td class="whitespace-nowrap text-wrap px-6 py-4 align-top">
+							<td class="whitespace-nowrap text-wrap p-4 align-top">
 								{assessmentContext.assessments?.length}
 							</td>
 						</tr>
@@ -91,18 +91,18 @@
 			<thead>
 				<tr>
 					<th
-						class="text-wrap bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class="text-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Navn
 					</th>
 					<th
-						class="text-wrap bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class="text-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Vurderinger
 					</th>
 					{#each teachingGroup.assessmentContexts as assessmentContext}
 						<th
-							class="text-wrap bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
+							class="text-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700 last:border-r-0"
 						>
 							{assessmentContext.title}
 						</th>
@@ -113,16 +113,14 @@
 				{#if teachingGroup?.students?.length}
 					{#each teachingGroup.students as student}
 						<tr>
-							<td class="whitespace-nowrap text-wrap px-6 py-4 align-top">{student.name}</td>
-							<td class="whitespace-nowrap text-wrap px-6 py-4 align-top">
+							<td class="whitespace-nowrap text-wrap p-4 align-top">{student.name}</td>
+							<td class="whitespace-nowrap text-wrap p-4 align-top">
 								{countAssessments(student.id)}
 							</td>
 							{#each teachingGroup.assessmentContexts as assessmentContext}
 								<TableCell
 									editFunction={() => toggleForm({ student, assessmentContext })}
-									deleteFunction={() => console.log('delete')}
 									assessments={getAssessments(student.id, assessmentContext.assessments)}
-									{student}
 								/>
 							{/each}
 						</tr>
