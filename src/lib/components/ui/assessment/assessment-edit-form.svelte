@@ -85,7 +85,7 @@
 	function handleSave(event) {
 		setTimeout(() => {
 			doneFunction()
-		}, 1500)
+		}, 800)
 	}
 
 	onMount(() => {
@@ -98,6 +98,10 @@
 			}
 		})
 	})
+
+	function getFormAction() {
+		return localAssessment.id ? 'update' : 'create'
+	}
 </script>
 
 {#if success}
@@ -109,8 +113,8 @@
 {/if}
 
 <div class={cn('h-full bg-white p-4', className)} {...$$restProps}>
-	<form method="POST" action="?/create" bind:this={form} use:enhance>
-		<input type="hidden" name="action" value="create" />
+	<form method="POST" action="?/{getFormAction()}" bind:this={form} use:enhance>
+		<input type="hidden" name="action" value={getFormAction()} />
 		<input type="hidden" name="assessment" value={JSON.stringify(localAssessment)} />
 		<h2 class="mb-2 text-xl font-bold">
 			{assessmentContext.title} | {student.name}

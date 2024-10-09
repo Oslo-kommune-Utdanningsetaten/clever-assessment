@@ -1,6 +1,5 @@
 <script>
 	import Toggle from 'svelte-toggle'
-	import { ToggleCore } from 'svelte-toggle'
 	import TableCell from '$lib/components/ui/assessment/table-cell.svelte'
 	import AssessmentEditForm from '$lib/components/ui/assessment/assessment-edit-form.svelte'
 	import { selectedTestUser } from '$lib/stores/userStore.js'
@@ -9,8 +8,9 @@
 	export let data
 	let teacher = $selectedTestUser
 	let isFormVisible = false
-	let selectedAssessmentContext
 	let selectedStudent
+	let selectedAssessment
+	let selectedAssessmentContext
 	let isMaintenanceModeEnabled = false
 
 	let { teachingGroup, assessmentFormats } = data
@@ -24,19 +24,22 @@
 		return assessments ? assessments.filter(assessment => assessment.student.id === studentId) : []
 	}
 
-	const countAssessments = studentId => {
-		let count = 0
-		teachingGroup.assessmentContexts.forEach(assessmentContext => {
-			const assessments = getAssessments(studentId, assessmentContext.assessments)
-			count += assessments.length
-		})
-		return count
-	}
-
-	const toggleForm = async (options = {}) => {
+	const createAssessment = async (options = {}) => {
 		const { student, assessmentContext } = options
 		selectedAssessmentContext = assessmentContext
 		selectedStudent = student
+		toggleForm()
+	}
+
+	const editAssessment = async (options = {}) => {
+		const { student, assessmentContext, assessment } = options
+		selectedAssessmentContext = assessmentContext
+		selectedStudent = student
+		selectedAssessment = assessment
+		toggleForm()
+	}
+
+	const toggleForm = () => {
 		isFormVisible = !isFormVisible
 	}
 
@@ -120,11 +123,6 @@
 					>
 						Navn
 					</th>
-					<th
-						class="w-1/6 text-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
-					>
-						Vurderinger
-					</th>
 					{#each teachingGroup.assessmentContexts as assessmentContext}
 						<th
 							class="w-1/3 text-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700 last:border-r-0"
@@ -139,13 +137,13 @@
 					{#each teachingGroup.students as student}
 						<tr>
 							<td class="whitespace-nowrap text-wrap p-4 align-top">{student.name}</td>
-							<td class="whitespace-nowrap text-wrap p-4 align-top">
-								{countAssessments(student.id)}
-							</td>
 							{#each teachingGroup.assessmentContexts as assessmentContext}
 								<TableCell
-									editFunction={() => toggleForm({ student, assessmentContext })}
+									editFunction={editAssessment}
+									createFunction={createAssessment}
 									assessments={getAssessments(student.id, assessmentContext.assessments)}
+									{student}
+									{assessmentContext}
 									isDeleteEnabled={isMaintenanceModeEnabled}
 								/>
 							{/each}

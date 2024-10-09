@@ -47,6 +47,14 @@ export const createAssessment = async (assessment) => {
   return { data, error }
 }
 
+export const updateAssessment = async (assessment) => {
+  const { data, error } = await supabase
+    .from('Assessment')
+    .update(assessment)
+    .select()
+  return { data, error }
+}
+
 export const deleteAssessment = async (assessmentId) => {
   const { data, error } = await supabase
     .from('Assessment')

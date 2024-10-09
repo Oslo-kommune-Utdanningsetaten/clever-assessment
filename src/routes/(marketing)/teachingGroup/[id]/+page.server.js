@@ -1,6 +1,6 @@
 import { getTeachingGroup } from '$lib/server/db/teachingGroup.js'
 import { getUsers } from '$lib/server/db/user.js'
-import { createAssessment, deleteAssessment } from '$lib/server/db/assessment'
+import { createAssessment, deleteAssessment, updateAssessment } from '$lib/server/db/assessment'
 import { getAssessmentFormats } from '$lib/server/db/assessmentFormat'
 
 /** @type {import('./$types').PageServerLoad} */
@@ -40,6 +40,12 @@ export const actions = {
 		const formData = await request.formData()
 		const assessmentId = formData.get('assessmentId')
 		const { data, error } = await deleteAssessment(assessmentId)
+		return data
+	},
+	update: async ({ request }) => {
+		const formData = await request.formData()
+		const storableAssessment = assembleStorableAsessment(JSON.parse(formData.get('assessment')))
+		const { data, error } = await updateAssessment(storableAssessment)
 		return data
 	}
 }
