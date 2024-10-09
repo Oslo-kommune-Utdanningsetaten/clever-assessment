@@ -1,10 +1,11 @@
 <script>
-	import Toggle from 'svelte-toggle'
 	import { onMount } from 'svelte'
 	import { enhance } from '$app/forms'
+	import { page } from '$app/stores'
 	import { cn } from '$lib/utils.js'
 	import { Button } from '$ui/button'
 	import * as Dropdown from '$ui/dropdown-menu'
+	import Toggle from 'svelte-toggle'
 	import TeacherIcon from 'lucide-svelte/icons/graduation-cap'
 	import ChevronDownIcon from 'lucide-svelte/icons/chevron-down'
 	let className = undefined
@@ -17,6 +18,10 @@
 	export let doneFunction
 	export let assessmentFormats
 
+	let form
+	let success = false
+	let error = null
+
 	let localAssessment = {}
 	let localTextContent
 
@@ -25,7 +30,7 @@
 
 	function initializeLocals() {
 		if (assessment) {
-			localAssessment = Object.assign({}, incomingAssessment)
+			localAssessment = Object.assign({}, assessment)
 		} else {
 			localAssessment = {
 				teacherId: teacher.id,
@@ -75,8 +80,6 @@
 			}
 		}
 		localAssessment = Object.assign({}, localAssessment)
-		console.log('tag', localAssessment.content.tag)
-		console.log('tags', localAssessment.content.tags)
 	}
 
 	function handleSave(event) {
@@ -87,11 +90,26 @@
 
 	onMount(() => {
 		initializeLocals()
+
+		page.subscribe($page => {
+			if ($page.form) {
+				success = $page.form.success
+				error = $page.form.error
+			}
+		})
 	})
 </script>
 
+{#if success}
+	<p>Operation successful!</p>
+{/if}
+
+{#if error}
+	<p>Error: {error}</p>
+{/if}
+
 <div class={cn('h-full bg-white p-4', className)} {...$$restProps}>
-	<form method="POST" use:enhance>
+	<form method="POST" action="?/create" bind:this={form} use:enhance>
 		<input type="hidden" name="action" value="create" />
 		<input type="hidden" name="assessment" value={JSON.stringify(localAssessment)} />
 		<h2 class="mb-2 text-xl font-bold">
@@ -212,13 +230,17 @@
 				off="Nei"
 			/>
 		</div>
-		<button type="submit" class="rounded bg-green-600 px-4 py-2 text-white" on:click={handleSave}>
+		<button
+			type="submit"
+			class="rounded bg-green-300 px-4 py-2 text-gray-700 hover:bg-green-600 hover:text-white"
+			on:click={handleSave}
+		>
 			Lagre
 		</button>
 		<button
 			type="cancel"
 			on:click={doneFunction}
-			class="rounded bg-gray-600 px-4 py-2 text-white hover:bg-gray-300 hover:text-gray-700"
+			class="rounded bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-600 hover:text-white"
 		>
 			Avbryt
 		</button>

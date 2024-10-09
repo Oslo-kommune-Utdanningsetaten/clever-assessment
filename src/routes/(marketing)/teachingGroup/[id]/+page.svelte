@@ -1,13 +1,17 @@
 <script>
+	import Toggle from 'svelte-toggle'
+	import { ToggleCore } from 'svelte-toggle'
 	import TableCell from '$lib/components/ui/assessment/table-cell.svelte'
 	import AssessmentEditForm from '$lib/components/ui/assessment/assessment-edit-form.svelte'
 	import { selectedTestUser } from '$lib/stores/userStore.js'
+	import { onMount } from 'svelte'
 
 	export let data
 	let teacher = $selectedTestUser
 	let isFormVisible = false
 	let selectedAssessmentContext
 	let selectedStudent
+	let isMaintenanceModeEnabled = false
 
 	let { teachingGroup, assessmentFormats } = data
 
@@ -35,6 +39,14 @@
 		selectedStudent = student
 		isFormVisible = !isFormVisible
 	}
+
+	const toggleMaintenanceMode = () => {
+		isMaintenanceModeEnabled = !isMaintenanceModeEnabled
+	}
+
+	onMount(() => {
+		isMaintenanceModeEnabled = false
+	})
 </script>
 
 <div class="container relative my-12 max-w-[1024px] space-y-12">
@@ -86,23 +98,36 @@
 	</div>
 
 	<div class="space-y-6">
-		<h2 class="font-bold sm:text-2xl md:text-3xl">Elevene</h2>
+		<h2 class="font-bold sm:text-2xl md:text-3xl">Elever</h2>
+		<div class="mb-4">
+			<label for="studentVisibility" class="text-l mb-2">Vedlikeholdsmodus</label>
+			<Toggle
+				on:toggle={toggleMaintenanceMode}
+				toggled={isMaintenanceModeEnabled}
+				label=""
+				switchColor="#eee"
+				toggledColor="red"
+				untoggledColor="green"
+				on="Aktivert"
+				off="Deaktivert"
+			/>
+		</div>
 		<table class="min-w-full table-auto shadow-md">
 			<thead>
 				<tr>
 					<th
-						class="text-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class="w-1/6 text-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Navn
 					</th>
 					<th
-						class="text-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class="w-1/6 text-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Vurderinger
 					</th>
 					{#each teachingGroup.assessmentContexts as assessmentContext}
 						<th
-							class="text-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700 last:border-r-0"
+							class="w-1/3 text-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700 last:border-r-0"
 						>
 							{assessmentContext.title}
 						</th>
@@ -121,6 +146,7 @@
 								<TableCell
 									editFunction={() => toggleForm({ student, assessmentContext })}
 									assessments={getAssessments(student.id, assessmentContext.assessments)}
+									isDeleteEnabled={isMaintenanceModeEnabled}
 								/>
 							{/each}
 						</tr>
@@ -132,7 +158,7 @@
 
 	<!-- Sidebar Form (Initially Hidden) -->
 	<div
-		class={`duration-400 absolute bottom-[-50px] right-0 overflow-hidden rounded border-2 border-emerald-300 shadow-lg transition-all ease-in-out ${
+		class={`duration-400 absolute bottom-[-50px] right-0 overflow-hidden rounded border-2 border-emerald-400 shadow-lg transition-all ease-in-out ${
 			isFormVisible ? 'w-1/2' : 'w-0'
 		}`}
 	>
