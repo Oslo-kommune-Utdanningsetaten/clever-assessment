@@ -33,13 +33,14 @@
 				>
 					<div class="items-left flex space-x-1 pr-2 text-sm">
 						<span>{assessment.assessmentFormat.title}</span>
-						<span class="font-light text-white">-</span>
-						<span class="font-light text-white">
-							{formatRelative(assessment.created_at, new Date(), {
+						<span class="font-light">-</span>
+						<span class="font-light">
+							{formatRelative(new Date(assessment.createdAt), new Date(), {
 								locale: nbLocale,
 							})}
 						</span>
 					</div>
+
 					<div class="flex items-center space-x-2">
 						<span title="{assessment.isVisibleToStudent ? 'S' : 'Ikke s'}ynlig for eleven">
 							{#if assessment.isVisibleToStudent}
@@ -84,4 +85,12 @@
 	>
 		Ny vurdering
 	</button>
+	{#if assessments.length}
+		<a
+			class="ml-2 text-gray-700 hover:underline hover:underline-offset-2"
+			href={`/assessments/${assessments.map(a => a.id).join(',')}`}
+		>
+			Ta en titt
+		</a>
+	{/if}
 </td>

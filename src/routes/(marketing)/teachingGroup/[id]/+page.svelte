@@ -64,7 +64,7 @@
 	<div class="space-y-6">
 		<h2 class="text-3xl font-bold md:text-3xl">Vurderingssituasjoner</h2>
 
-		<table class="min-w-full shadow-md">
+		<table class="min-w-full border-collapse border border-gray-400 shadow-md">
 			<thead>
 				<tr>
 					<th
@@ -119,7 +119,7 @@
 				off="Deaktivert"
 			/>
 		</div>
-		<table class="min-w-full table-auto shadow-md">
+		<table class="min-w-full table-auto border-collapse border border-gray-400 shadow-md">
 			<thead>
 				<tr>
 					<th

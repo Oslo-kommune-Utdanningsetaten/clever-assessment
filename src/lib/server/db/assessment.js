@@ -1,12 +1,13 @@
 import { supabase } from '$lib/server/db/supabase.js'
 
 export const getAssessments = async (options = {}) => {
-  const { studentId, teacherId, assessmentContextId } = options
+  const { ids, studentId, teacherId, assessmentContextId } = options
   const selectStatement = `
     id,
     content,
-    is_self_assessment,
-    created_at,
+    isSelfAssessment: is_self_assessment,
+    isVisibleToStudent: is_visible_to_student,
+    createdAt: created_at,
     assessmentContext:assessment_context_id(
       id,
       title,
@@ -19,12 +20,21 @@ export const getAssessments = async (options = {}) => {
     teacher:teacher_id(
       id,
       name
+    ),
+    assessmentFormat:assessment_format_id(
+      id,
+      title,
+      tags,
+      variant
     )
   `
   let query = supabase
     .from('Assessment')
     .select(selectStatement)
 
+  if (ids) {
+    query = query.in('id', ids)
+  }
   if (studentId) {
     query = query.eq('student_id', studentId)
   }
