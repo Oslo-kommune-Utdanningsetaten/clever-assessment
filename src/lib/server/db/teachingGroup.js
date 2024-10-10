@@ -9,6 +9,7 @@ export const getTeachingGroup = async (options = {}) => {
       id,
       title,
       description,
+      createdAt: created_at,
       assessments: Assessment(
         id,
         content,
@@ -56,6 +57,14 @@ export const getTeachingGroup = async (options = {}) => {
 
   // we now have students and teacher, delete members
   delete teachingGroup.members
+
+  // sort stuff
+  teachingGroup.students.sort((a, b) => {
+    return a.name > b.name ? 1 : -1
+  })
+  teachingGroup.assessmentContexts.sort((a, b) => {
+    return new Date(a.createdAt) - new Date(b.createdAt)
+  })
 
   return { teachingGroup }
 }

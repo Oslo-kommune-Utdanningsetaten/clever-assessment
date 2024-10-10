@@ -44,7 +44,6 @@
 	const toggleForm = () => {
 		const scrollY = window.scrollY
 		formContainer.style.top = `${scrollY}px`
-		console.log('scrollY', scrollY)
 		isFormVisible = !isFormVisible
 	}
 
@@ -69,17 +68,17 @@
 			<thead>
 				<tr>
 					<th
-						class="text-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class="text-wrap border-r-2 bg-gray-100 px-4 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Tittel
 					</th>
 					<th
-						class=" ext-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class=" ext-wrap border-r-2 bg-gray-100 px-4 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Beskrivelse
 					</th>
 					<th
-						class="text-wrap bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class="text-wrap bg-gray-100 px-4 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Vurderinger
 					</th>
@@ -124,13 +123,13 @@
 			<thead>
 				<tr>
 					<th
-						class="w-1/6 text-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class="w-1/6 text-wrap border-r-2 bg-gray-100 px-4 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Navn
 					</th>
 					{#each teachingGroup.assessmentContexts as assessmentContext}
 						<th
-							class="w-1/3 text-wrap border-r-2 bg-gray-100 px-6 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700 last:border-r-0"
+							class="w-1/3 text-wrap border-r-2 bg-gray-100 px-4 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700 last:border-r-0"
 						>
 							{assessmentContext.title}
 						</th>

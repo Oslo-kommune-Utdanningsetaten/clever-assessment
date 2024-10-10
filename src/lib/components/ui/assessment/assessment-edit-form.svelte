@@ -35,7 +35,7 @@
 			localAssessment = {
 				teacherId: teacher.id,
 				studentId: student.id,
-				assessmentFormat: Object.assign({}, assessmentFormats[1]),
+				assessmentFormat: Object.assign({}, assessmentFormats[4]),
 				assessmentContext,
 				title: null,
 				content: { text: null, video: null, audio: null, tag: null, tags: [] },
@@ -122,7 +122,7 @@
 		<input type="hidden" name="action" value={getFormAction()} />
 		<input type="hidden" name="assessment" value={JSON.stringify(localAssessment)} />
 		<h2 class="mb-2 text-xl font-bold">
-			{assessmentContext.title} | {student.name}
+			{student.name} | {assessmentContext.title}
 		</h2>
 		<p class="mb-4 italic">{assessmentContext.description || ''}</p>
 

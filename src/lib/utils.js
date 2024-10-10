@@ -44,11 +44,24 @@ export const flyAndScale = (node, params = { y: -8, x: 0, start: 0.95, duration:
 	}
 }
 
+// Check if elementB is inside elementA by comparing their positions
+function isElementInside(outerElement, innerElement) {
+	const rectA = outerElement.getBoundingClientRect()
+	const rectB = innerElement.getBoundingClientRect()
+	const isInside = (
+		rectB.top >= rectA.top &&
+		rectB.left >= rectA.left &&
+		rectB.bottom <= rectA.bottom &&
+		rectB.right <= rectA.right
+	)
+	return isInside
+}
+
 /** Dispatch event on click outside of node */
 export const clickOutside = (node) => {
 
 	const handleClick = event => {
-		if (node && !node.contains(event.target) && !event.defaultPrevented) {
+		if (node && !node.contains(event.target) && !event.defaultPrevented && !isElementInside(node, event.target)) {
 			node.dispatchEvent(
 				new CustomEvent('click_outside', node)
 			)
