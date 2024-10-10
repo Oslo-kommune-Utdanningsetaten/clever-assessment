@@ -57,8 +57,12 @@
 								<PencilIcon class="h-4 w-4" />
 							</button>
 						</span>
-						<span title="Slett denne vurderingen">
-							{#if isDeleteEnabled}
+						{#if isDeleteEnabled}
+							<span
+								title="Slett denne vurderingen"
+								in:fly={{ x: 20, duration: 300 }}
+								out:fly={{ x: 20, duration: 300 }}
+							>
 								<form method="POST" action="?/delete" use:enhance>
 									<input type="hidden" name="action" value="delete" />
 									<input type="hidden" name="assessmentId" value={assessment.id} />
@@ -66,8 +70,8 @@
 										<TrashIcon class="h-4 w-4" />
 									</button>
 								</form>
-							{/if}
-						</span>
+							</span>
+						{/if}
 					</div>
 				</li>
 			{/each}

@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte'
 	import { enhance } from '$app/forms'
 	import { page } from '$app/stores'
-	import { cn } from '$lib/utils.js'
+	import { cn, clickOutside } from '$lib/utils.js'
 	import { Button } from '$ui/button'
 	import * as Dropdown from '$ui/dropdown-menu'
 	import Toggle from 'svelte-toggle'
@@ -90,7 +90,7 @@
 
 	onMount(() => {
 		initializeLocals()
-
+		console.log('localAssessment', localAssessment)
 		page.subscribe($page => {
 			if ($page.form) {
 				success = $page.form.success
@@ -112,7 +112,12 @@
 	<p>Error: {error}</p>
 {/if}
 
-<div class={cn('h-full bg-white p-4', className)} {...$$restProps}>
+<div
+	class={cn('h-full bg-white p-4', className)}
+	{...$$restProps}
+	use:clickOutside
+	on:click_outside={doneFunction}
+>
 	<form method="POST" action="?/{getFormAction()}" bind:this={form} use:enhance>
 		<input type="hidden" name="action" value={getFormAction()} />
 		<input type="hidden" name="assessment" value={JSON.stringify(localAssessment)} />

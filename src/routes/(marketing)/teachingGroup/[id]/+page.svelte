@@ -6,6 +6,7 @@
 	import { onMount } from 'svelte'
 
 	export let data
+	let formContainer
 	let teacher = $selectedTestUser
 	let isFormVisible = false
 	let selectedStudent
@@ -28,6 +29,7 @@
 		const { student, assessmentContext } = options
 		selectedAssessmentContext = assessmentContext
 		selectedStudent = student
+		selectedAssessment = null
 		toggleForm()
 	}
 
@@ -40,6 +42,9 @@
 	}
 
 	const toggleForm = () => {
+		const scrollY = window.scrollY
+		formContainer.style.top = `${scrollY}px`
+		console.log('scrollY', scrollY)
 		isFormVisible = !isFormVisible
 	}
 
@@ -156,7 +161,8 @@
 
 	<!-- Sidebar Form (Initially Hidden) -->
 	<div
-		class={`duration-400 absolute bottom-[-50px] right-0 overflow-hidden rounded border-2 border-emerald-400 shadow-lg transition-all ease-in-out ${
+		bind:this={formContainer}
+		class={`duration-400 absolute right-0 overflow-hidden rounded border-2 border-emerald-400 shadow-lg transition-all ease-in-out ${
 			isFormVisible ? 'w-1/2' : 'w-0'
 		}`}
 	>
@@ -166,7 +172,7 @@
 				student={selectedStudent}
 				{teacher}
 				doneFunction={() => toggleForm()}
-				assessment={null}
+				assessment={selectedAssessment}
 				{assessmentFormats}
 			/>
 		{/if}
