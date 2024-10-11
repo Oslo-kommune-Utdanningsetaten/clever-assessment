@@ -17,6 +17,17 @@
 	export let isDeleteEnabled
 	export let student
 	export let assessmentContext
+
+	function getMinimizedContent(assessment) {
+		if (assessment.assessmentFormat.variant === 'text') {
+			return assessment.content.text.slice(0, 30) + '...'
+		} else if (assessment.assessmentFormat.variant === 'single_tag') {
+			return assessment.content.tag
+		} else if (assessment.assessmentFormat.variant === 'multiple_tags') {
+			return assessment.content.tags.join(', ')
+		}
+		return ''
+	}
 </script>
 
 <td
@@ -35,12 +46,13 @@
 					out:fly={{ y: -20, duration: 300 }}
 				>
 					<div class="items-left flex space-x-1 pr-2 text-sm">
-						<span>{assessment.assessmentFormat.title}</span>
-						<span class="font-light">-</span>
-						<span class="font-light">
-							{formatRelative(new Date(assessment.createdAt), new Date(), {
-								locale: nbLocale,
-							})}
+						<span
+							title={'Opprettet ' +
+								formatRelative(new Date(assessment.createdAt), new Date(), {
+									locale: nbLocale,
+								})}
+						>
+							{assessment.assessmentFormat.title}: {getMinimizedContent(assessment)}
 						</span>
 					</div>
 
