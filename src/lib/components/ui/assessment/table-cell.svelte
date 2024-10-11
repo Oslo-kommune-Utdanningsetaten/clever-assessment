@@ -20,7 +20,10 @@
 </script>
 
 <td
-	class={cn('text-wrap-2 whitespace-nowrap p-4 align-top text-foreground', className)}
+	class={cn(
+		'text-wrap-2 whitespace-nowrap border-b-2 border-gray-100  p-4 align-top text-foreground',
+		className
+	)}
 	{...$$restProps}
 >
 	{#if assessments}
@@ -64,8 +67,8 @@
 								in:fly={{ x: 20, duration: 300 }}
 								out:fly={{ x: 20, duration: 300 }}
 							>
-								<form method="POST" action="?/delete" use:enhance>
-									<input type="hidden" name="action" value="delete" />
+								<form method="POST" action="?/deleteAssessment" use:enhance>
+									<input type="hidden" name="action" value="deleteAssessment" />
 									<input type="hidden" name="assessmentId" value={assessment.id} />
 									<button type="submit" class="rounded bg-red-500 p-2 text-white hover:bg-red-700">
 										<TrashIcon class="h-4 w-4" />
@@ -81,7 +84,7 @@
 	<button
 		on:click={() => createFunction({ student, assessmentContext })}
 		title="Opprett en ny vurdering"
-		class="transform rounded border border-gray-600 px-2 pb-2 pt-1 text-sm text-gray-600 transition hover:border-0 hover:bg-green-600 hover:text-white"
+		class="z-0 transform rounded border border-gray-600 px-2 pb-2 pt-1 text-sm text-gray-600 transition hover:border-green-600 hover:bg-green-600 hover:text-white"
 	>
 		Ny vurdering
 	</button>

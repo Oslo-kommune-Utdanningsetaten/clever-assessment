@@ -17,34 +17,36 @@
 	}
 </script>
 
-<div class="container relative my-10 max-w-[1024px] space-y-10">
-	<h2 class="font-bold sm:text-2xl md:text-3xl">
+<div class="container relative my-10 max-w-[1024px]">
+	<h2 class="mb-6 font-bold sm:text-2xl md:text-3xl">
 		{assessments[0].student.name} | {assessmentContext.title}
 	</h2>
 
-	{#each assessments as assessment}
-		<div
-			class="mb-2"
-			title={formatRelative(assessment.createdAt, new Date(), { locale: nbLocale })}
-		>
-			<label
-				for="content"
-				class="text-l mb-0 flex items-center border-b-0 bg-slate-100 p-2 font-bold"
-			>
-				<span class="mr-3">
-					{assessment.assessmentFormat.title}
-				</span>
-				<span>
-					{#if assessment.isVisibleToStudent}
-						<EyeOpenIcon class="h-4 w-4" />
-					{:else}
-						<EyeClosedIcon class="h-4 w-4" />
-					{/if}
-				</span>
-			</label>
+	<div class="border">
+		{#each assessments as assessment}
+			<div class="border bg-slate-100 p-2">
+				<div class="text-l flex items-center font-bold">
+					<span class="mr-3">
+						{assessment.assessmentFormat.title}
+					</span>
+					<span>
+						{#if assessment.isVisibleToStudent}
+							<EyeOpenIcon class="h-4 w-4" />
+						{:else}
+							<EyeClosedIcon class="h-4 w-4" />
+						{/if}
+					</span>
+				</div>
+				<div class="text-sm">
+					<p class="italic">
+						Opprettet {formatRelative(assessment.createdAt, new Date(), { locale: nbLocale })} av {assessment
+							.teacher.name}
+					</p>
+				</div>
+			</div>
 			<!-- Text -->
 			{#if assessment?.assessmentFormat?.variant === 'text'}
-				<p class="w-full border p-2">{assessment.content.text}</p>
+				<p class="m-0 w-full border p-2">{assessment.content.text}</p>
 
 				<!-- Video -->
 			{:else if assessment?.assessmentFormat?.variant === 'video'}
@@ -64,6 +66,6 @@
 					{assessment.content.tags.join(', ')}
 				</p>
 			{/if}
-		</div>
-	{/each}
+		{/each}
+	</div>
 </div>

@@ -118,7 +118,7 @@
 >
 	<form
 		method="POST"
-		action="?/{localAssessment.id ? 'update' : 'create'}"
+		action="?/{localAssessment.id ? 'update' : 'create'}Assessment"
 		bind:this={form}
 		use:enhance
 	>

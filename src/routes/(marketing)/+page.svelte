@@ -6,25 +6,6 @@
 	import { selectedTestUser } from '$lib/stores/userStore.js'
 
 	export let data
-
-	const assessments = [
-		{
-			title: 'Fint',
-			description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-			href: ''
-		},
-		{
-			title: 'Noe mer',
-			description: 'Dolor sit amet, consectetur adipiscing elit.',
-			href: ''
-		},
-		{
-			title: 'En annen vurdering',
-			description:
-				'Sic transit gloria mundi. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-			href: ''
-		}
-	]
 </script>
 
 <div class="container my-12 max-w-[1024px] space-y-12">
@@ -32,8 +13,7 @@
 		<div class="space-y-6">
 			<h1 class="text-3xl font-bold md:text-4xl">Hei, {$selectedTestUser.name}</h1>
 			<p>
-				Du er {#if $selectedTestUser.role === 'teacher'}lærer{:else}elev{/if}. Her er dine
-				undervisningsgrupper:
+				Du er {#if $selectedTestUser.role === 'teacher'}lærer{:else}elev{/if}
 			</p>
 			<div class="overflow-x-auto">
 				<table class="w-full shadow-md">
@@ -42,68 +22,49 @@
 							<th
 								class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700 sm:px-6"
 							>
-								Undervisningsgruppe</th
-							>
+								Undervisningsgruppe
+							</th>
 							<th
 								class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700 sm:px-6"
 							>
-								Fag</th
-							>
+								Fag
+							</th>
 							<th
 								class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700 sm:px-6"
 							>
-								Fagkode</th
-							>
+								Fagkode
+							</th>
 							<th
 								class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700 sm:px-6"
 							>
-								Vurderingssituasjoner</th
-							>
-							<th
-								class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700 sm:px-6"
-							>
-								Vurderinger</th
-							>
+								Vurderinger
+							</th>
 						</tr>
 					</thead>
 					<tbody class="divide-y divide-gray-200">
 						{#each data.teachingGroupMemberships as teachingGroupMembership}
 							<tr>
-								<td class="whitespace-nowrap px-6 py-4"
-									>{teachingGroupMembership.teachingGroup.displayName}</td
-								>
-								<td class="whitespace-nowrap px-6 py-4"
-									>{teachingGroupMembership.teachingGroup.subjectDisplayName}</td
-								>
-								<td class="whitespace-nowrap px-6 py-4"
-									>{teachingGroupMembership.teachingGroup.subjectCode}</td
-								>
-								<td class="whitespace-nowrap px-6 py-4"
-									><a href="teachingGroup/{teachingGroupMembership.teachingGroup.id}">Link</a></td
-								>
-								<td class="whitespace-nowrap px-6 py-4"><a href="">Link</a></td>
+								<td class="whitespace-nowrap px-6 py-4">
+									{teachingGroupMembership.teachingGroup.displayName}
+								</td>
+								<td class="whitespace-nowrap px-6 py-4">
+									{teachingGroupMembership.teachingGroup.subjectDisplayName}
+								</td>
+								<td class="whitespace-nowrap px-6 py-4">
+									{teachingGroupMembership.teachingGroup.subjectCode}
+								</td>
+								<td class="whitespace-nowrap px-6 py-4">
+									<a
+										class="hover:underline hover:underline-offset-2"
+										href="teachingGroup/{teachingGroupMembership.teachingGroup.id}"
+									>
+										Link
+									</a>
+								</td>
 							</tr>
 						{/each}
 					</tbody>
 				</table>
-			</div>
-		</div>
-
-		<div class="space-y-6">
-			<h1 class="text-2xl font-semibold md:text-3xl">Dine vurderinger</h1>
-			<div class="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
-				{#each assessments as assessment}
-					<Card.Root class="w-full">
-						<Card.Header>
-							<Card.Title>
-								{assessment.title}
-							</Card.Title>
-							<Card.Description>
-								{assessment.description}
-							</Card.Description>
-						</Card.Header>
-					</Card.Root>
-				{/each}
 			</div>
 		</div>
 	{:else}

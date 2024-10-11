@@ -29,12 +29,11 @@ A clickable experiment on what an assessment app in Osloskolen could look like
   - [x] with assessmentFormat
   - [x] change content type based on assessmentFormat
 - [x] Assessment edit
-- [ ] Alle vurderinger (assessment) i én vurderingssituasjon
+- [x] Alle vurderinger (assessment) i én vurderingssituasjon
+- [x] Assessment details
+- [x] AssessmentContext create/edit/delete
 - [ ] Assessment draft storage
 - [ ] Assessment publish_at
-- [ ] Assessment details
-- [ ] Assessment styles
-- [ ] AssessmentContext create/edit/delete
 - [ ] Student: My assessments
 - [ ] Student: Self assessment
 - [ ] Variant table of assessments within teaching group
