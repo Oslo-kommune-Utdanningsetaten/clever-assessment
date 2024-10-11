@@ -18,8 +18,9 @@ export const load = async ({ params }) => {
 
 function assembleStorableAsessment(assessment) {
 	const result = {}
-	result.teacher_id = assessment.teacherId
-	result.student_id = assessment.studentId
+	result.id = assessment.id
+	result.teacher_id = assessment.teacher.id
+	result.student_id = assessment.student.id
 	result.is_self_assessment = assessment.isSelfAssessment
 	result.is_visible_to_student = assessment.isVisibleToStudent
 	result.assessment_context_id = assessment.assessmentContext.id

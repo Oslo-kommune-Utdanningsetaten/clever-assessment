@@ -58,10 +58,13 @@ export const createAssessment = async (assessment) => {
 }
 
 export const updateAssessment = async (assessment) => {
+  console.log('updateAssessment', assessment)
   const { data, error } = await supabase
     .from('Assessment')
     .update(assessment)
+    .eq('id', assessment.id)
     .select()
+  console.log('THE updated assessment', data, error)
   return { data, error }
 }
 

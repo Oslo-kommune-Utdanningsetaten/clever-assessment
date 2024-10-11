@@ -30,16 +30,19 @@
 
 	function initializeLocals() {
 		if (assessment) {
-			localAssessment = Object.assign({}, assessment)
+			localAssessment = Object.assign({}, assessment, {
+				assessmentContext: { id: assessmentContext.id },
+			})
 		} else {
 			localAssessment = {
-				teacherId: teacher.id,
-				studentId: student.id,
-				assessmentFormat: Object.assign({}, assessmentFormats[4]),
+				teacher,
+				student,
+				assessmentFormat: Object.assign({}, assessmentFormats[4]), // default to text
 				assessmentContext,
 				title: null,
 				content: { text: null, video: null, audio: null, tag: null, tags: [] },
 				isVisibleToStudent: true,
+				isSelfAssessment: false,
 			}
 		}
 		localTextContent = localAssessment.content.text
@@ -90,7 +93,6 @@
 
 	onMount(() => {
 		initializeLocals()
-		console.log('localAssessment', localAssessment)
 		page.subscribe($page => {
 			if ($page.form) {
 				success = $page.form.success
@@ -98,10 +100,6 @@
 			}
 		})
 	})
-
-	function getFormAction() {
-		return localAssessment.id ? 'update' : 'create'
-	}
 </script>
 
 {#if success}
@@ -118,8 +116,12 @@
 	use:clickOutside
 	on:click_outside={doneFunction}
 >
-	<form method="POST" action="?/{getFormAction()}" bind:this={form} use:enhance>
-		<input type="hidden" name="action" value={getFormAction()} />
+	<form
+		method="POST"
+		action="?/{localAssessment.id ? 'update' : 'create'}"
+		bind:this={form}
+		use:enhance
+	>
 		<input type="hidden" name="assessment" value={JSON.stringify(localAssessment)} />
 		<h2 class="mb-2 text-xl font-bold">
 			{student.name} | {assessmentContext.title}

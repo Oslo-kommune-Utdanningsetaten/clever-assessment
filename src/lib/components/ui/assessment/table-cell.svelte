@@ -67,7 +67,7 @@
 								<form method="POST" action="?/delete" use:enhance>
 									<input type="hidden" name="action" value="delete" />
 									<input type="hidden" name="assessmentId" value={assessment.id} />
-									<button type="submit" class="rounded p-2 text-white hover:bg-red-700">
+									<button type="submit" class="rounded bg-red-500 p-2 text-white hover:bg-red-700">
 										<TrashIcon class="h-4 w-4" />
 									</button>
 								</form>
@@ -90,7 +90,7 @@
 			class="ml-2 text-gray-700 hover:underline hover:underline-offset-2"
 			href={`/assessments/${assessments.map(a => a.id).join(',')}`}
 		>
-			Ta en titt
+			Detaljer
 		</a>
 	{/if}
 </td>
