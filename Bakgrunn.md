@@ -20,7 +20,7 @@ Lærere opplever at dagens systemer er krøkkete og tidkrevende. Dobbeltføring,
 
 ## KI-støttet vurdering
 
-Gitt en strukturert tilnærming til vurdering, vil det være mulig å f.eks. koble på en bot som kan transkribere en muntlig vurdering, eller støtte eleven med ved å la en chatbot finne sammenhenger på tvers av flere mottatte vurderinger. Her er det mange muligheter.
+Gitt en strukturert tilnærming til vurdering, vil det være mulig å f.eks. koble på en bot som kan transkribere en muntlig vurdering, eller støtte eleven ved å få en en chatbot finne sammenhenger på tvers av flere mottatte vurderinger. Her er det mange muligheter.
 
 ## Dokumentasjon
 
