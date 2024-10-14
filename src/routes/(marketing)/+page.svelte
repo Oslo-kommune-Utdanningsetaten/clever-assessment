@@ -16,7 +16,9 @@
 				Du er {#if $selectedTestUser.role === 'teacher'}lærer{:else}elev{/if}
 			</p>
 			<div class="overflow-x-auto">
-				<table class="w-full shadow-md">
+				<table
+					class="min-w-full table-auto border-separate rounded border border-gray-300 shadow-md"
+				>
 					<thead>
 						<tr>
 							<th

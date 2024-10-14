@@ -99,12 +99,12 @@
 			<thead>
 				<tr>
 					<th
-						class="text-wrap border-r-2 bg-gray-100 px-4 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class="text-wrap bg-gray-100 px-4 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Tittel
 					</th>
 					<th
-						class="text-wrap border-r-2 bg-gray-100 px-4 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
+						class="text-wrap bg-gray-100 px-4 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 					>
 						Beskrivelse
 					</th>
@@ -192,13 +192,13 @@
 				<thead>
 					<tr>
 						<th
-							class="sticky left-0 w-1/6 text-wrap border-r-2 bg-gray-100 px-4 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
+							class="sticky left-0 w-1/6 text-wrap bg-gray-100 px-4 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700"
 						>
 							Navn
 						</th>
 						{#each teachingGroup.assessmentContexts as assessmentContext}
 							<th
-								class="w-1/3 text-wrap border-r-2 bg-gray-100 px-4 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700 last:border-r-0"
+								class="w-1/3 text-wrap bg-gray-100 px-4 py-3 text-left align-top text-xs font-semibold uppercase tracking-wider text-gray-700 last:border-r-0"
 							>
 								{assessmentContext.title}
 							</th>
@@ -210,7 +210,7 @@
 						{#each teachingGroup.students as student}
 							<tr>
 								<td
-									class="sticky left-0 z-50 whitespace-nowrap text-wrap border-b-2 border-r-2 bg-gray-100 p-4 align-top"
+									class="sticky left-0 z-50 whitespace-nowrap text-wrap border-b-2 bg-gray-100 p-4 align-top"
 								>
 									{student.name}
 								</td>
