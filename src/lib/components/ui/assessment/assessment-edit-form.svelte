@@ -5,7 +5,9 @@
 	import { cn, clickOutside } from '$lib/utils.js'
 	import { Button } from '$ui/button'
 	import * as Dropdown from '$ui/dropdown-menu'
-	import Toggle from 'svelte-toggle'
+
+	import Switch from '$ui/toggle/Switch.svelte'
+
 	import TeacherIcon from 'lucide-svelte/icons/graduation-cap'
 	import ChevronDownIcon from 'lucide-svelte/icons/chevron-down'
 	let className = undefined
@@ -21,6 +23,8 @@
 	let form
 	let success = false
 	let error = null
+
+	let isOn = false
 
 	let localAssessment = {}
 	let localTextContent
@@ -45,7 +49,9 @@
 				isSelfAssessment: false,
 			}
 		}
+		isOn = localAssessment.isVisibleToStudent
 		localTextContent = localAssessment.content.text
+		console.log('INIT localAssessment', localAssessment)
 	}
 
 	function handleContentInput() {
@@ -54,8 +60,13 @@
 	}
 
 	function handleToggleStudentVisibility() {
-		localAssessment.isVisibleToStudent = !localAssessment.isVisibleToStudent
-		localAssessment = Object.assign({}, localAssessment)
+		console.log('handleToggleStudentVisibility BEGIN', isOn, localAssessment.isVisibleToStudent)
+		localAssessment = Object.assign({}, localAssessment, {
+			isVisibleToStudent: !localAssessment.isVisibleToStudent,
+		})
+		//isOn = localAssessment.isVisibleToStudent
+		console.log('isVisibleToStudent', localAssessment.isVisibleToStudent)
+		console.log('handleToggleStudentVisibility END', isOn, localAssessment.isVisibleToStudent)
 	}
 
 	function handleSelectAssessmentFormat(assessmentFormatId) {
@@ -231,14 +242,10 @@
 		</div>
 		<div class="mb-4">
 			<label for="studentVisibility" class="text-l mb-2 block font-bold">Synlig for eleven</label>
-			<Toggle
-				on:toggle={handleToggleStudentVisibility}
-				label=""
-				switchColor="#eee"
-				toggledColor="#24a148"
-				untoggledColor="#fa4d56"
-				on="Ja"
-				off="Nei"
+			<Switch
+				bind:checked={localAssessment.isVisibleToStudent}
+				id="isVisibleToStudent"
+				text={localAssessment.isVisibleToStudent ? 'Ja' : 'Nei'}
 			/>
 		</div>
 		<button

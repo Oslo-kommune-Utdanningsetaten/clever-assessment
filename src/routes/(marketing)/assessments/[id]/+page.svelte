@@ -15,6 +15,10 @@
 		teacher = $selectedTestUser
 		assessmentContext = assessments[0].assessmentContext
 	}
+
+	function formatText(input) {
+		return input ? input.replace(/\n/g, '<br>') : ''
+	}
 </script>
 
 <div class="container relative my-10 max-w-[1024px]">
@@ -46,7 +50,7 @@
 			</div>
 			<!-- Text -->
 			{#if assessment?.assessmentFormat?.variant === 'text'}
-				<p class="m-0 w-full border p-2">{assessment.content.text}</p>
+				<p class="m-0 w-full border p-2">{@html formatText(assessment.content.text)}</p>
 
 				<!-- Video -->
 			{:else if assessment?.assessmentFormat?.variant === 'video'}

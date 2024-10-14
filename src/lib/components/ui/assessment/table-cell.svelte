@@ -20,7 +20,7 @@
 
 	function getMinimizedContent(assessment) {
 		if (assessment.assessmentFormat.variant === 'text') {
-			return assessment.content.text.slice(0, 30) + '...'
+			return assessment.content.text ? assessment.content.text.slice(0, 30) + '...' : 'empty'
 		} else if (assessment.assessmentFormat.variant === 'single_tag') {
 			return assessment.content.tag
 		} else if (assessment.assessmentFormat.variant === 'multiple_tags') {
@@ -41,7 +41,7 @@
 		<ul>
 			{#each assessments as assessment}
 				<li
-					class="mb-2 flex items-center justify-between rounded bg-green-600 py-1 pl-2 pr-1 text-white"
+					class="mb-2 flex items-center justify-between rounded border-2 border-green-600 py-1 pl-2 pr-1"
 					in:fly={{ y: 20, duration: 300 }}
 					out:fly={{ y: -20, duration: 300 }}
 				>
@@ -59,15 +59,15 @@
 					<div class="flex items-center space-x-2">
 						<span title="{assessment.isVisibleToStudent ? 'S' : 'Ikke s'}ynlig for eleven">
 							{#if assessment.isVisibleToStudent}
-								<EyeOpenIcon class="h-4 w-4 text-gray-300" />
+								<EyeOpenIcon class="h-4 w-4 " />
 							{:else}
-								<EyeClosedIcon class="h-4 w-4 text-gray-300" />
+								<EyeClosedIcon class="h-4 w-4 " />
 							{/if}
 						</span>
 						<span title="Rediger denne vurderingen">
 							<button
 								type="submit"
-								class="rounded p-2 text-white hover:bg-white hover:text-green-600"
+								class="rounded p-2 hover:bg-green-600 hover:text-white"
 								on:click={editFunction({ student, assessmentContext, assessment })}
 							>
 								<PencilIcon class="h-4 w-4" />
@@ -96,7 +96,7 @@
 	<button
 		on:click={() => createFunction({ student, assessmentContext })}
 		title="Opprett en ny vurdering"
-		class="z-0 transform rounded border border-gray-600 px-2 pb-2 pt-1 text-sm text-gray-600 transition hover:border-green-600 hover:bg-green-600 hover:text-white"
+		class="z-0 transform rounded border-2 border-gray-600 px-2 pb-2 pt-1 text-sm text-gray-600 transition hover:border-green-600 hover:bg-green-600 hover:text-white"
 	>
 		Ny vurdering
 	</button>
@@ -105,7 +105,7 @@
 			class="ml-2 text-gray-700 hover:underline hover:underline-offset-2"
 			href={`/assessments/${assessments.map(a => a.id).join(',')}`}
 		>
-			Detaljer
+			Vis detaljer
 		</a>
 	{/if}
 </td>

@@ -1,5 +1,5 @@
-import { tv } from 'tailwind-variants';
-import Root from './toggle.svelte';
+import { tv } from 'tailwind-variants'
+import Root from './toggle.svelte'
 export const toggleVariants = tv({
 	base: 'ring-offset-background hover:bg-muted hover:text-muted-foreground focus-visible:ring-ring data-[state=on]:bg-accent data-[state=on]:text-accent-foreground inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
 	variants: {
@@ -17,9 +17,9 @@ export const toggleVariants = tv({
 		variant: 'default',
 		size: 'default'
 	}
-});
+})
 export {
 	Root,
 	//
 	Root as Toggle
-};
+}

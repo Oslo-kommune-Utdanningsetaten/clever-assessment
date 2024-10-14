@@ -1,5 +1,5 @@
 <script>
-	import Toggle from 'svelte-toggle'
+	import Switch from '$ui/toggle/Switch.svelte'
 	import { enhance } from '$app/forms'
 	import { fly } from 'svelte/transition'
 	import TableCell from '$lib/components/ui/assessment/table-cell.svelte'
@@ -86,15 +86,10 @@
 	</h2>
 	<div class="mb-4">
 		<label for="studentVisibility" class="text-l mb-2">Farligmodus</label>
-		<Toggle
-			on:toggle={toggleMaintenanceMode}
-			toggled={isMaintenanceModeEnabled}
-			label=""
-			switchColor="#eee"
-			toggledColor="red"
-			untoggledColor="green"
-			on="Aktivert 😱"
-			off="Deaktivert 😎"
+		<Switch
+			bind:checked={isMaintenanceModeEnabled}
+			id="isMaintenanceModeEnabled"
+			text={isMaintenanceModeEnabled ? 'Aktivert 😱' : 'Deaktivert 😎'}
 		/>
 	</div>
 	<div class="space-y-6">
