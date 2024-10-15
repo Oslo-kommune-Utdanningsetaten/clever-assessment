@@ -175,7 +175,7 @@
 						<button
 							on:click={() => createAssessmentContext({ teachingGroup })}
 							title="Opprett en ny vurderingssituasjon"
-							class="transform rounded border border-gray-600 px-2 pb-2 pt-1 text-sm text-gray-600 transition hover:border-green-600 hover:bg-green-600 hover:text-white"
+							class="transform rounded border-2 border-gray-500 px-2 pb-2 pt-1 text-sm text-gray-600 transition hover:border-green-600 hover:bg-green-600 hover:text-white"
 						>
 							Ny vurderingssituasjon
 						</button>

@@ -1,8 +1,6 @@
 import { supabase } from '$lib/server/db/supabase.js'
 
-export const getTeachingGroup = async (options = {}) => {
-  const { teachingGroupId } = options
-  const selectTeachingGroup = `
+const selectTeachingGroup = `
     id,
     displayName: display_name,
     assessmentContexts: AssessmentContext(
@@ -34,13 +32,17 @@ export const getTeachingGroup = async (options = {}) => {
     ),
     members: TeachingGroupMembership(
       id,
+      role,
       user: User(
         id,
-        name,
-        role
+        name
       )
     )
   `
+
+export const getTeachingGroup = async (options = {}) => {
+  const { teachingGroupId } = options
+
   const { data, error } = await supabase
     .from('TeachingGroup')
     .select(selectTeachingGroup)
@@ -49,11 +51,11 @@ export const getTeachingGroup = async (options = {}) => {
   const teachingGroup = data[0]
 
   // hide foreign key table and filter out non-students from the members list
-  const students = teachingGroup.members.map((member) => member.user).filter((member) => member.role === 'student')
+  const students = teachingGroup.members.filter((member) => member.role === 'student').map((student) => student.user)
   teachingGroup.students = students
 
   // assuming there is only one teacher per group
-  teachingGroup.teacher = teachingGroup.members.map((member) => member.user).find((member) => member.role === 'teacher')
+  teachingGroup.teacher = teachingGroup.members.find((member) => member.role === 'teacher').user
 
   // we now have students and teacher, delete members
   delete teachingGroup.members

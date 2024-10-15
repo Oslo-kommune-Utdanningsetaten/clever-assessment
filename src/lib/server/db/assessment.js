@@ -11,7 +11,13 @@ export const getAssessments = async (options = {}) => {
     assessmentContext:assessment_context_id(
       id,
       title,
-      description
+      description,
+      teachingGroup:teaching_group_id(
+        id,
+        subjectCode:subject_code,
+        subjectDisplayName:subject_display_name,
+        displayName:display_name
+      )
     ),
     student:student_id(
       id,

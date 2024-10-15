@@ -4,6 +4,7 @@ export const getTeachingGroupMemberships = async (options = {}) => {
 	const { userId } = options
 	const selectStatement = `
     id,
+		role,
     teachingGroup: TeachingGroup (
       id,
       subjectCode: subject_code,

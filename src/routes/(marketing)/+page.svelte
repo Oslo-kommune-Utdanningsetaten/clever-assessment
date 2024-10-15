@@ -4,6 +4,7 @@
 	import { Separator } from '$ui/separator'
 	import { page } from '$app/stores'
 	import { selectedTestUser } from '$lib/stores/userStore.js'
+	import TableCell from '$lib/components/ui/assessment/table-cell.svelte'
 
 	export let data
 </script>
@@ -12,9 +13,8 @@
 	{#if $page.data.session}
 		<div class="space-y-6">
 			<h1 class="text-3xl font-bold md:text-4xl">Hei, {$selectedTestUser.name}</h1>
-			<p>
-				Du er {#if $selectedTestUser.role === 'teacher'}lærer{:else}elev{/if}
-			</p>
+			<p>Dette er dine undervisningsgrupper:</p>
+
 			<div class="overflow-x-auto">
 				<table
 					class="min-w-full table-auto border-separate rounded border border-gray-300 shadow-md"
@@ -67,6 +67,58 @@
 						{/each}
 					</tbody>
 				</table>
+
+				<h2 class="my-6 text-2xl font-bold md:text-3xl">Vurderinger du har fått</h2>
+				<pre>{JSON.stringify(data.assessmentsByAssessmentContext, null, 2)}</pre>
+				<div class="overflow-x-auto">
+					<table
+						class="min-w-full table-auto border-separate rounded border border-gray-300 shadow-md"
+					>
+						<thead>
+							<tr>
+								<th
+									class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700 sm:px-6"
+								>
+									Fag
+								</th>
+								<th
+									class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700 sm:px-6"
+								>
+									Situasjon
+								</th>
+								<th
+									class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700 sm:px-6"
+								>
+									Vurderinger
+								</th>
+								<th
+									class="bg-gray-100 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-700 sm:px-6"
+								>
+									Lærer
+								</th>
+							</tr>
+						</thead>
+						<tbody class="divide-y divide-gray-200">
+							{#each data.assessmentsByAssessmentContext as assessmentContext}
+								<tr>
+									<td class="whitespace-nowrap px-6 py-4">
+										{assessmentContext.teachingGroup?.displayName}
+									</td>
+									<td class="whitespace-nowrap px-6 py-4">
+										{assessmentContext.title}
+									</td>
+
+									<td class="whitespace-nowrap px-6 py-4">
+										<pre>hei</pre>
+									</td>
+									<td class="whitespace-nowrap px-6 py-4">
+										<pre>hei</pre>
+									</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	{:else}

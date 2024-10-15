@@ -96,7 +96,7 @@
 	<button
 		on:click={() => createFunction({ student, assessmentContext })}
 		title="Opprett en ny vurdering"
-		class="z-0 transform rounded border-2 border-gray-600 px-2 pb-2 pt-1 text-sm text-gray-600 transition hover:border-green-600 hover:bg-green-600 hover:text-white"
+		class="z-0 transform rounded border-2 border-gray-500 px-2 pb-2 pt-1 text-sm text-gray-600 transition hover:border-green-600 hover:bg-green-600 hover:text-white"
 	>
 		Ny vurdering
 	</button>
