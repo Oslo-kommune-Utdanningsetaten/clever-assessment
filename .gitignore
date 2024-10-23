@@ -1,6 +1,7 @@
 .DS_Store
 notes.txt
 node_modules
+dist
 /build
 /.svelte-kit
 /.vercel
